@@ -19,6 +19,7 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
         view.backgroundColor = .systemBackground
         
         searchBar.delegate = self
+        searchBar.placeholder = "Search books (e.g. Swift, JavaScript, MySQL)"
         navigationItem.titleView = searchBar
         
         tableView.dataSource = self
@@ -30,20 +31,36 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        Task {
+            await vm.search(query: searchBar.text ?? "")
+            tableView.reloadData()
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        vm.books.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) as! BookCell
-        
+        let book = vm.books[indexPath.row]
+        cell.configure(title: book.title, subTitle: book.subtitle, price: book.price)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        Task { [weak self] in
+            guard let self else { return }
+            if let range = await vm.loadNextPageIfNeeded(currentIndex: indexPath.row) {
+                let indexPath = range.map { IndexPath(row: $0, section: 0) }
+                self.tableView.insertRows(at: indexPath, with: .none)
+            }
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(BookDetailViewController(), animated: true)
+        let book = vm.books[indexPath.row]
+        navigationController?.pushViewController(BookDetailViewController(isbn13: book.isbn13), animated: true)
     }
 }
 
