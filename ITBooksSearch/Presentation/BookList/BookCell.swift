@@ -28,11 +28,6 @@ final class BookCell: UITableViewCell {
         lblSubtitle.font = .systemFont(ofSize: 13)
         lblPrice.font = .systemFont(ofSize: 13)
         
-        imgThumb.backgroundColor = .blue
-        lblTitle.text = "Title"
-        lblSubtitle.text = "SubTitle"
-        lblPrice.text = "$1.0"
-        
         let textStack = UIStackView(arrangedSubviews: [lblTitle, lblSubtitle, lblPrice])
         textStack.axis = .vertical
         textStack.spacing = 4

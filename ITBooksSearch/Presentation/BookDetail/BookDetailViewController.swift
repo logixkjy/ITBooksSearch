@@ -11,6 +11,7 @@ import SafariServices
 final class BookDetailViewController: UIViewController {
     private let isbn13: String
     private let vm: BookDetailViewModel
+    private let imageLoader: ImageLoader?
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -29,9 +30,10 @@ final class BookDetailViewController: UIViewController {
     
     private var currentImageURLString: String?
     
-    init(isbn13: String, vm: BookDetailViewModel = .init()) {
+    init(isbn13: String, vm: BookDetailViewModel = .init(), imageLoader: ImageLoader) {
         self.isbn13 = isbn13
         self.vm = vm
+        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -91,6 +93,27 @@ final class BookDetailViewController: UIViewController {
         lblDesc.text = book.desc
         
         btnOpen.isHidden = book.url.isEmpty
+        
+        loadCoverIfNeeded(urlString: book.image)
+    }
+    
+    private func loadCoverIfNeeded(urlString: String) {
+        guard let loader = imageLoader else { return }
+        guard let url = URL(string: urlString) else { return }
+        
+        if currentImageURLString == urlString { return }
+        currentImageURLString = urlString
+        
+        imgCover.image = nil
+        
+        Task { [weak self] in
+            guard let self else { return }
+            let img = try? await loader.load(url)
+            
+            if self.currentImageURLString == urlString {
+                self.imgCover.image = img
+            }
+        }
     }
     
     @objc private func tapOpen() {

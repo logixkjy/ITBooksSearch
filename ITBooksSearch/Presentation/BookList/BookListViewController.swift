@@ -12,6 +12,7 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
     private let tableView = UITableView()
     private let searchBar = UISearchBar()
     private let vm = BookListViewModel()
+    private let imageLoader = ImageLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,17 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) as! BookCell
         let book = vm.books[indexPath.row]
         cell.configure(title: book.title, subTitle: book.subtitle, price: book.price)
+        
+        cell.setThumbnail(nil)
+        if let url = book.imageURL {
+            let imageToken = cell.setImageToken(url.absoluteString)
+            Task {
+                if let img = try? await imageLoader.load(url),
+                   cell.isImageTokenValid(imageToken) {
+                    cell.setThumbnail(img)
+                }
+            }
+        }
         return cell
     }
     
@@ -60,7 +72,7 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = vm.books[indexPath.row]
-        navigationController?.pushViewController(BookDetailViewController(isbn13: book.isbn13), animated: true)
+        navigationController?.pushViewController(BookDetailViewController(isbn13: book.isbn13, imageLoader: imageLoader), animated: true)
     }
 }
 
