@@ -28,6 +28,9 @@ final class BookDetailViewController: UIViewController {
     private let lblError = UILabel()
     private let btnOpen = UIButton(type: .system)
     
+    private let lblPdfSection = UILabel()
+    private let pdfStack = UIStackView()
+    
     private var currentImageURLString: String?
     
     init(isbn13: String, vm: BookDetailViewModel = .init(), imageLoader: ImageLoader) {
@@ -95,6 +98,44 @@ final class BookDetailViewController: UIViewController {
         btnOpen.isHidden = book.url.isEmpty
         
         loadCoverIfNeeded(urlString: book.image)
+        loadPDFSection(book.pdf)
+    }
+    
+    private func loadPDFSection(_ pdf: [String: String]?) {
+        pdfStack.arrangedSubviews.forEach { v in
+            pdfStack.removeArrangedSubview(v)
+            v.removeFromSuperview()
+        }
+        
+        guard let pdf = pdf, !pdf.isEmpty else {
+            lblPdfSection.isHidden = true
+            pdfStack.isHidden = true
+            return
+        }
+        
+        lblPdfSection.isHidden = false
+        pdfStack.isHidden = false
+        
+        for (title, urlString) in pdf.sorted(by: { $0.key < $1.key }) {
+            let button = UIButton(type: .system)
+            button.contentHorizontalAlignment = .leading
+            button.titleLabel?.numberOfLines = 2
+            button.setTitle(title, for: .normal)
+            button.accessibilityHint = "Tap to open \(title)"
+            
+            button.addAction(UIAction { [weak self] _ in
+                self?.openPDF(urlString)
+            }, for: .touchUpInside)
+            
+            pdfStack.addArrangedSubview(button)
+        }
+    }
+    
+    @objc private func openPDF(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        let safari = SFSafariViewController(url: url)
+        present(safari, animated: true)
     }
     
     private func loadCoverIfNeeded(urlString: String) {
@@ -191,6 +232,12 @@ final class BookDetailViewController: UIViewController {
             activity.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
+        lblPdfSection.text = "PDF"
+        lblPdfSection.font = .boldSystemFont(ofSize: 16)
+        
+        pdfStack.axis = .vertical
+        pdfStack.spacing = 8
+        
         let textStack = UIStackView(arrangedSubviews: [
             lblTitle,
             lblSubTitle,
@@ -199,7 +246,9 @@ final class BookDetailViewController: UIViewController {
             lblRating,
             btnOpen,
             lblError,
-            lblDesc
+            lblDesc,
+            lblPdfSection,
+            pdfStack
         ])
         textStack.axis = .vertical
         textStack.spacing = 10
