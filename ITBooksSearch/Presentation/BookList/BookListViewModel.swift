@@ -23,7 +23,7 @@ final class BookListViewModel {
     }
     
     func search(query: String) async {
-        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: " ").joined(separator: "+")
         guard !q.isEmpty else { return }
         
         isLoading = true

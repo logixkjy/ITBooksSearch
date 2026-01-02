@@ -16,11 +16,11 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Books"
+        title = "IT Book Store"
         view.backgroundColor = .systemBackground
         
         searchBar.delegate = self
-        searchBar.placeholder = "Search books (e.g. Swift, JavaScript, MySQL)"
+        searchBar.placeholder = "Search books (e.g. Swift, clean+code)"
         navigationItem.titleView = searchBar
         
         tableView.dataSource = self
@@ -32,9 +32,16 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
             await vm.search(query: searchBar.text ?? "")
-            tableView.reloadData()
+            await MainActor.run {
+                self.tableView.reloadData()
+                self.tableView.layoutIfNeeded()
+                if self.vm.books.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
+            }
         }
     }
 
