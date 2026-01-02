@@ -88,7 +88,8 @@ final class BookDetailViewController: UIViewController {
         lblMetaInfo.text = [
             book.authors.isEmpty ? nil : "By: \(book.authors)",
             book.publisher.isEmpty ? nil : "Published by: \(book.publisher)",
-            book.year.isEmpty ? nil : "Published in: \(book.year)"
+            book.year.isEmpty ? nil : "Published in: \(book.year)",
+            book.language.isEmpty ? nil : "Language: \(book.language)"
         ].compactMap { $0 }.joined(separator: "\n")
         
         lblPrice.text = book.price
