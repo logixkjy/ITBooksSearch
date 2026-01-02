@@ -20,6 +20,7 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
         view.backgroundColor = .systemBackground
         
         searchBar.delegate = self
+        searchBar.searchTextField.inputAccessoryView = makekeyboardToolbar()
         searchBar.placeholder = "Search books (e.g. Swift, clean+code)"
         navigationItem.titleView = searchBar
         
@@ -28,6 +29,25 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
         tableView.register(BookCell.self, forCellReuseIdentifier: "BookCell")
         view.addSubview(tableView)
         tableView.frame = view.bounds
+        
+        updateEmptyState()
+    }
+    
+    private let emptyLabel: UILabel = {
+        let l = UILabel()
+        l.text = "Search for IT Books"
+        l.textAlignment = .center
+        l.textColor = .secondaryLabel
+        l.numberOfLines = 0
+        return l
+    }()
+    
+    private func updateEmptyState() {
+        if vm.books.isEmpty {
+            tableView.backgroundView = emptyLabel
+        } else {
+            tableView.backgroundView = nil
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -37,10 +57,24 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
             await vm.search(query: searchBar.text ?? "")
             await MainActor.run {
                 self.tableView.reloadData()
+                self.updateEmptyState()
                 self.tableView.layoutIfNeeded()
                 if self.vm.books.count > 0 {
                     self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                 }
+            }
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            Task { [weak self] in
+                guard let self else { return }
+                await self.vm.resetSearch()
+                self.tableView.reloadData()
+                self.updateEmptyState()
+                let top = CGPoint(x: 0, y: -self.tableView.adjustedContentInset.top)
+                self.tableView.setContentOffset(top, animated: false)
             }
         }
     }
@@ -80,6 +114,20 @@ final class BookListViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = vm.books[indexPath.row]
         navigationController?.pushViewController(BookDetailViewController(isbn13: book.isbn13, imageLoader: imageLoader), animated: true)
+    }
+    
+    private func makekeyboardToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let fiexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneTapped))
+        toolbar.items = [fiexible, doneButton]
+        return toolbar
+    }
+    
+    @objc private func doneTapped() {
+        searchBar.resignFirstResponder()
     }
 }
 

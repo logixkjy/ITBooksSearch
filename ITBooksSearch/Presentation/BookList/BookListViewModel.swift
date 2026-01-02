@@ -70,4 +70,12 @@ final class BookListViewModel {
             return nil
         }
     }
+    
+    func resetSearch() async {
+        books.removeAll()
+        currentQuery = ""
+        nextPage = 1
+        hasNextPage = true
+        isLoading = false
+    }
 }
