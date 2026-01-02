@@ -85,16 +85,18 @@ final class BookDetailViewController: UIViewController {
         lblSubTitle.text = book.subtitle.isEmpty ? nil : book.subtitle
         lblSubTitle.isHidden = (lblSubTitle.text == nil)
         
+        lblPrice.text = "Price: \t\t\(book.price)"
+        lblRating.text = "Rating: \t\t\(book.rating)/5"
+        
         lblMetaInfo.text = [
-            book.authors.isEmpty ? nil : "By: \(book.authors)",
-            book.publisher.isEmpty ? nil : "Published by: \(book.publisher)",
-            book.year.isEmpty ? nil : "Published in: \(book.year)",
-            book.language.isEmpty ? nil : "Language: \(book.language)",
-            book.pages.isEmpty ? nil : "Pages: \(book.pages)"
+            book.authors.isEmpty ? nil : "Authors: \t\(book.authors)",
+            book.publisher.isEmpty ? nil : "Publisher: \t\(book.publisher), \(book.year)",
+            book.pages.isEmpty ? nil : "Pages: \t\t\(book.pages)",
+            book.language.isEmpty ? nil : "Language: \t\(book.language)",
+            book.isbn10.isEmpty ? nil : "ISBN-10: \t\(book.isbn10)",
+            book.isbn13.isEmpty ? nil : "ISBN-13: \t\(book.isbn13)"
         ].compactMap { $0 }.joined(separator: "\n")
         
-        lblPrice.text = book.price
-        lblRating.text = "Rating: \(book.rating)/5"
         lblDesc.text = book.desc
         
         btnOpen.isHidden = book.url.isEmpty
@@ -243,9 +245,9 @@ final class BookDetailViewController: UIViewController {
         let textStack = UIStackView(arrangedSubviews: [
             lblTitle,
             lblSubTitle,
-            lblMetaInfo,
             lblPrice,
             lblRating,
+            lblMetaInfo,
             btnOpen,
             lblError,
             lblDesc,
