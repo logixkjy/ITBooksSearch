@@ -89,7 +89,8 @@ final class BookDetailViewController: UIViewController {
             book.authors.isEmpty ? nil : "By: \(book.authors)",
             book.publisher.isEmpty ? nil : "Published by: \(book.publisher)",
             book.year.isEmpty ? nil : "Published in: \(book.year)",
-            book.language.isEmpty ? nil : "Language: \(book.language)"
+            book.language.isEmpty ? nil : "Language: \(book.language)",
+            book.pages.isEmpty ? nil : "Pages: \(book.pages)"
         ].compactMap { $0 }.joined(separator: "\n")
         
         lblPrice.text = book.price
