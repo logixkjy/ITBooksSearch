@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		7CBAE5C72F07970F003154C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7CBAE56A2F061AAF003154C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7CBAE5712F061AAF003154C3;
+			remoteInfo = ITBooksSearch;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7CBAE5722F061AAF003154C3 /* ITBooksSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITBooksSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CBAE5C32F07970F003154C3 /* ITBooksSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ITBooksSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +40,22 @@
 			path = ITBooksSearch;
 			sourceTree = "<group>";
 		};
+		7CBAE5C42F07970F003154C3 /* ITBooksSearchTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ITBooksSearchTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		7CBAE56F2F061AAF003154C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CBAE5C02F07970F003154C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				7CBAE5742F061AAF003154C3 /* ITBooksSearch */,
+				7CBAE5C42F07970F003154C3 /* ITBooksSearchTests */,
 				7CBAE5732F061AAF003154C3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				7CBAE5722F061AAF003154C3 /* ITBooksSearch.app */,
+				7CBAE5C32F07970F003154C3 /* ITBooksSearchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +108,29 @@
 			productReference = 7CBAE5722F061AAF003154C3 /* ITBooksSearch.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7CBAE5C22F07970F003154C3 /* ITBooksSearchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CBAE5C92F07970F003154C3 /* Build configuration list for PBXNativeTarget "ITBooksSearchTests" */;
+			buildPhases = (
+				7CBAE5BF2F07970F003154C3 /* Sources */,
+				7CBAE5C02F07970F003154C3 /* Frameworks */,
+				7CBAE5C12F07970F003154C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7CBAE5C82F07970F003154C3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7CBAE5C42F07970F003154C3 /* ITBooksSearchTests */,
+			);
+			name = ITBooksSearchTests;
+			packageProductDependencies = (
+			);
+			productName = ITBooksSearchTests;
+			productReference = 7CBAE5C32F07970F003154C3 /* ITBooksSearchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -95,6 +143,10 @@
 				TargetAttributes = {
 					7CBAE5712F061AAF003154C3 = {
 						CreatedOnToolsVersion = 26.1.1;
+					};
+					7CBAE5C22F07970F003154C3 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 7CBAE5712F061AAF003154C3;
 					};
 				};
 			};
@@ -113,12 +165,20 @@
 			projectRoot = "";
 			targets = (
 				7CBAE5712F061AAF003154C3 /* ITBooksSearch */,
+				7CBAE5C22F07970F003154C3 /* ITBooksSearchTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7CBAE5702F061AAF003154C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CBAE5C12F07970F003154C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +195,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7CBAE5BF2F07970F003154C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7CBAE5C82F07970F003154C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7CBAE5712F061AAF003154C3 /* ITBooksSearch */;
+			targetProxy = 7CBAE5C72F07970F003154C3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7CBAE5862F061AB1003154C3 /* Debug */ = {
@@ -323,6 +398,48 @@
 			};
 			name = Release;
 		};
+		7CBAE5CA2F07970F003154C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = E9X7ZUYDPK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.logixkjy.ITBooksSearchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ITBooksSearch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ITBooksSearch";
+			};
+			name = Debug;
+		};
+		7CBAE5CB2F07970F003154C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = E9X7ZUYDPK;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.logixkjy.ITBooksSearchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ITBooksSearch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ITBooksSearch";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -340,6 +457,15 @@
 			buildConfigurations = (
 				7CBAE5862F061AB1003154C3 /* Debug */,
 				7CBAE5872F061AB1003154C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CBAE5C92F07970F003154C3 /* Build configuration list for PBXNativeTarget "ITBooksSearchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CBAE5CA2F07970F003154C3 /* Debug */,
+				7CBAE5CB2F07970F003154C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

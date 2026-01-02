@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BookSearchResponce: Decodable {
+struct BookSearchResponse: Decodable {
     let error: String
     let total: String
     let page: String

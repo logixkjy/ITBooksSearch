@@ -8,7 +8,7 @@
 import Foundation
 
 protocol BookAPIServiceType {
-    func search(query: String, page: Int) async throws -> BookSearchResponce
+    func search(query: String, page: Int) async throws -> BookSearchResponse
     func detail(isbn13: String) async throws -> BookDetail
 }
 
@@ -19,8 +19,8 @@ final class BookAPIService: BookAPIServiceType {
         self.network = network
     }
     
-    func search(query: String, page: Int) async throws -> BookSearchResponce {
-        try await network.decode(BookSearchResponce.self, from: Endpoint.search(query: query, page: page).url)
+    func search(query: String, page: Int) async throws -> BookSearchResponse {
+        try await network.decode(BookSearchResponse.self, from: Endpoint.search(query: query, page: page).url)
     }
     
     func detail(isbn13: String) async throws -> BookDetail {
